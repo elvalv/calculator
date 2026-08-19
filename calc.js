@@ -14,6 +14,17 @@ function multiply(a,b) {
     return a*b;
 }
 
+function modulo(a,b) {
+    return a%b;
+}
+
+function addClearEvent(event) {
+    const input = document.querySelector(".screen");
+    if (input.value !== "") {
+        input.value = "";
+    }
+}
+
 function addBackspaceEvent(event) {
     const input = document.querySelector(".screen");
     if (input.value !== "") {
@@ -27,7 +38,7 @@ function addText(event) {
     input.value = input.value+text;
 }
 
-function addNumberEvents() {
+function addButtonEvents() {
     const numberButtons = document.querySelectorAll(".display");
     numberButtons.forEach((button) => {
         button.addEventListener("click", addText);
@@ -37,7 +48,8 @@ function addNumberEvents() {
 function operate() {
     const input = document.querySelector(".screen");
     const operationLine = input.value;
-    const line = operationLine.match(/[0-9.]+|[+\-*\u00f7]/g);
+    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    // alert(line);
 
     const a = Number(line[0]);
     const b = Number(line[2]);
@@ -57,6 +69,9 @@ function operate() {
         case "*":
             answer = multiply(a,b);
             break;
+        case "%":
+            answer = modulo(a,b);
+            break;
     }
     input.value = answer;
 }
@@ -67,4 +82,7 @@ equals.addEventListener("click", operate);
 const backspace = document.querySelector(".backspace");
 backspace.addEventListener("click", addBackspaceEvent);
 
-addNumberEvents();
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", addClearEvent);
+
+addButtonEvents();
