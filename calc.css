@@ -1,0 +1,66 @@
+body, .calc, .keys, .operations, .numbers, .numbers div {
+    display: flex;
+}
+
+body {
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.calc {
+    flex-direction: column;
+    align-items: center;
+    background-color: grey;
+    width: 400px;
+    height: 600px;
+    gap: 25px;
+    border-radius: 20px;
+}
+
+.screen {
+    margin-top: 30px;
+    height: 50px;
+    width: 280px;
+}
+
+.keys {
+    width: 280px;
+    height: 450px;
+    gap: 5px;
+}
+
+.operations {
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 5px;
+}
+
+.operation-key {
+    flex: 1;
+}
+
+.numbers {
+    flex-direction: column;
+    flex-grow: 4;
+    gap: 5px
+}
+
+.numbers div {
+    flex: 1;
+    gap: 5px;
+}
+
+.num-keys {
+    flex: 1;
+}
+
+.equals {
+    flex-grow: 2;
+}
+
+.screen {
+    font-size: 28px;
+}
