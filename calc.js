@@ -32,10 +32,31 @@ function addBackspaceEvent(event) {
     }
 }
 
-function checkOperationLimit(line,currentButton) {
+function checkOperationLimit(line, currentButton) {
+    // this regex is used to check if currentButton has an opeerational value
     const regex = /[%+\-*\u00f7]/;
     if(line !== null && line.length === 3 && regex.test(currentButton)) {
         operate();
+    }
+}
+
+function checkDecimal(line, decimal) {
+    // const rege = /./
+    if (line !== null && decimal === "." && line.at(-1).includes(decimal)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function checkEmptyOperationDecimal(line, decimal) {
+    const regex = /[%+\-*\u00f7]/;
+    const checkEmptyDecimal = line === null && decimal === ".";
+    const checkOperationDecimal = line !== null && regex.test(line.at(-1)) && decimal === ".";
+    if (checkEmptyDecimal || checkOperationDecimal) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -47,7 +68,12 @@ function addText(event) {
     const operationLine = input.value;
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
     checkOperationLimit(line, event.target.textContent);
-    input.value = input.value+text;
+    
+    if (checkEmptyOperationDecimal(line, event.target.textContent)) {
+        input.value = input.value+"0.";
+    } else if (!checkDecimal(line, event.target.textContent)) {
+        input.value = input.value+text;
+    }
 }
 
 function addDisplayEvents() {
