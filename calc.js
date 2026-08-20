@@ -1,21 +1,25 @@
+function roundNumber(number) {
+    return Math.round(number * 100000) / 100000;
+}
+
 function add(a,b) {
-    return a+b;
+    return roundNumber(a+b);
 }
 
 function subtract(a,b) {
-    return a-b;
+    return roundNumber(a-b);
 }
 
 function divide(a,b) {
-    return a/b;
+    return roundNumber(a/b);
 }
 
 function multiply(a,b) {
-    return a*b;
+    return roundNumber(a*b);
 }
 
 function modulo(a,b) {
-    return a%b;
+    return roundNumber(a%b);
 }
 
 function addClearEvent(event) {
@@ -67,11 +71,15 @@ function addText(event) {
 
     const operationLine = input.value;
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
-    checkOperationLimit(line, event.target.textContent);
+    checkOperationLimit(line, text);
     
-    if (checkEmptyOperationDecimal(line, event.target.textContent)) {
+    // first if statment deals with leading zeros
+    if (line !== null && line.at(-1) === "0" && text !== ".") {
+        const sliceValue = input.value.slice(0,input.value.length-1);
+        input.value = sliceValue+text;
+    } else if (checkEmptyOperationDecimal(line, text)) {
         input.value = input.value+"0.";
-    } else if (!checkDecimal(line, event.target.textContent)) {
+    } else if (!checkDecimal(line, text)) {
         input.value = input.value+text;
     }
 }
