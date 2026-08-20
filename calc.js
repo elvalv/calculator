@@ -37,7 +37,7 @@ function addBackspaceEvent(event) {
 }
 
 function checkOperationLimit(line, currentButton) {
-    // this regex is used to check if currentButton has an opeerational value
+    // this regex is used to check if currentButton has an operational value
     const regex = /[%+\-*\u00f7]/;
     if(line !== null && line.length === 3 && regex.test(currentButton)) {
         operate();
@@ -91,6 +91,14 @@ function addDisplayEvents() {
     });
 }
 
+function checkDivisionByZero(answer) {
+    if(answer === Infinity || answer === -Infinity || answer === NaN) {
+        return "Cannot divide by zero!";
+    } else {
+        return answer;
+    }
+}
+
 function operate() {
     const input = document.querySelector(".screen");
     const operationLine = input.value;
@@ -111,6 +119,7 @@ function operate() {
             break;
         case "\u00f7":
             answer = divide(a,b);
+            answer = checkDivisionByZero(answer);
             break;
         case "*":
             answer = multiply(a,b);
