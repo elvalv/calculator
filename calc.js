@@ -32,6 +32,13 @@ function addBackspaceEvent(event) {
     }
 }
 
+function checkOperationLimit(line,currentButton) {
+    const regex = /[%+\-*\u00f7]/;
+    if(line !== null && line.length === 3 && regex.test(currentButton)) {
+        operate();
+    }
+}
+
 // adds the buttons text into display
 function addText(event) {
     const input = document.querySelector(".screen");
@@ -39,9 +46,7 @@ function addText(event) {
 
     const operationLine = input.value;
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
-    if(line !== null && line.length === 3 ) {
-        operate();
-    }
+    checkOperationLimit(line, event.target.textContent);
     input.value = input.value+text;
 }
 
