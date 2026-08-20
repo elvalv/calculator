@@ -66,17 +66,37 @@ function checkEmptyOperationDecimal(line, decimal) {
     }
 }
 
+function isNegative(str) {
+    const num = Number(str);
+    return Number.isFinite(num) && num < 0;
+}
+
+function checkNegative(line) {
+    if(line !== null && line.length == 2 && isNegative(line.at(-1)) ) {
+        line.push(Math.abs(line[1]));
+        line[1] = "-";
+        return line;
+    } else {
+        return line;
+    }
+}
+
 // adds the buttons text into display
 function addText(event) {
     const input = document.querySelector(".screen");
     const text = event.target.textContent;
 
     const operationLine = input.value;
-    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    let line = operationLine.match(/-?[0-9.]+|[%+\-*\u00f7]/g);
+    line = checkNegative(line);
     const operations = /[%+\-*\u00f7]/;
     checkOperationLimit(line, text);
-    
-    if(clearResult && text === ".") {
+
+    if (line === null && operations.test(text) && text !== "-") {
+        console.log("Invalid operation!");
+    } else if (line !== null && line.length === 2 && operations.test(text)) {
+        console.log("invalid operation");
+    } else if(clearResult && text === ".") {
         input.value = "0."
         clearResult=false;
     } else if(clearResult && !operations.test(text)) {
@@ -112,7 +132,8 @@ function checkDivisionByZero(answer) {
 function operate() {
     const input = document.querySelector(".screen");
     const operationLine = input.value;
-    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    let line = operationLine.match(/-?[0-9.]+|[%+\-*\u00f7]/g);
+    line = checkNegative(line);
 
     const a = Number(line[0]);
     const b = Number(line[2]);
@@ -144,7 +165,8 @@ function operate() {
 function equalsBehavior() {
     const input = document.querySelector(".screen");
     const operationLine = input.value;
-    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    let line = operationLine.match(/-?[0-9.]+|[%+\-*\u00f7]/g);
+    line = checkNegative(line);
     if (line !== null && line.length === 3){
         operate();
     }
