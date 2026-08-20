@@ -73,20 +73,24 @@ function addText(event) {
 
     const operationLine = input.value;
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    const operations = /[%+\-*\u00f7]/;
     checkOperationLimit(line, text);
     
-    if(clearResult) {
+    if(clearResult && text === ".") {
+        input.value = "0."
+        clearResult=false;
+    } else if(clearResult && !operations.test(text)) {
         input.value = text;
         clearResult=false;
-    }
-    // first if statment deals with leading zeros
-    else if (line !== null && line.at(-1) === "0" && text !== ".") {
+    } else if (line !== null && line.at(-1) === "0" && text !== ".") {
+        // first if statment deals with leading zeros
         const sliceValue = input.value.slice(0,input.value.length-1);
         input.value = sliceValue+text;
     } else if (checkEmptyOperationDecimal(line, text)) {
         input.value = input.value+"0.";
     } else if (!checkDecimal(line, text)) {
         input.value = input.value+text;
+        clearResult = false;
     }
 }
 
