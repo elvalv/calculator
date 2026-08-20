@@ -32,13 +32,20 @@ function addBackspaceEvent(event) {
     }
 }
 
+// adds the buttons text into display
 function addText(event) {
     const input = document.querySelector(".screen");
     const text = event.target.textContent;
+
+    const operationLine = input.value;
+    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    if(line !== null && line.length === 3 ) {
+        operate();
+    }
     input.value = input.value+text;
 }
 
-function addButtonEvents() {
+function addDisplayEvents() {
     const numberButtons = document.querySelectorAll(".display");
     numberButtons.forEach((button) => {
         button.addEventListener("click", addText);
@@ -85,4 +92,4 @@ backspace.addEventListener("click", addBackspaceEvent);
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", addClearEvent);
 
-addButtonEvents();
+addDisplayEvents();
