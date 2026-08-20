@@ -73,7 +73,15 @@ function isNegative(str) {
 
 function checkNegative(line) {
     if(line !== null && line.length == 2 && isNegative(line.at(-1)) ) {
-        line.push(Math.abs(line[1]));
+        line.push(line[1].replaceAll("-", ""));
+        line[1] = "-";
+        return line;
+    } else if (line !== null && line.length == 2 && line.at(-1) === "-0") {
+        line.push(line[1].replaceAll("-", ""));
+        line[1] = "-";
+        return line;
+    } else if (line !== null && line.length == 2 && line.at(-1) === "-0.") {
+        line.push(line[1].replaceAll("-", ""));
         line[1] = "-";
         return line;
     } else {
