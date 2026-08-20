@@ -93,7 +93,6 @@ function checkNegative(line) {
 function addText(event) {
     const input = document.querySelector(".screen");
     const text = event.target.textContent;
-
     const operationLine = input.value;
     let line = operationLine.match(/-?[0-9.]+|[%+\-*\u00f7]/g);
     line = checkNegative(line);
@@ -122,11 +121,40 @@ function addText(event) {
     }
 }
 
+/* 
+    This function will check the behavior of each operations
+    And make sure they are valid behaviors
+*/
+function operationBehaviors(event) {
+    const input = document.querySelector(".screen");
+    const currenOperation = event.target.textContent;
+    const operationLine = input.value;
+    let line = operationLine.match(/-?[0-9.]+|[%+\-*\u00f7]/g);
+    line = checkNegative(line);
+    const operations = /[%+\-*\u00f7]/;
+
+
+    if (line !== null && line.length == 2 && operations.test(currenOperation)) {
+        input.value = input.value.slice(0,1)+currenOperation;
+    } else if (!(line === null && currenOperation !== "-")) {
+    /*
+        if the dislay it not empty, you can add the operation
+        if the display is empty, and you click subtraction, you can add negative sign
+    */
+        addText(event);
+    }
+}
+
 function addDisplayEvents() {
     const numberButtons = document.querySelectorAll(".display");
     numberButtons.forEach((button) => {
         button.addEventListener("click", addText);
     });
+
+    const operationsButtons = document.querySelectorAll(".op");
+    operationsButtons.forEach((button) => {
+        button.addEventListener("click", operationBehaviors);
+    }); 
 }
 
 function checkDivisionByZero(answer) {
