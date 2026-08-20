@@ -122,8 +122,17 @@ function operate() {
     input.value = answer;
 }
 
+function equalsBehavior() {
+    const input = document.querySelector(".screen");
+    const operationLine = input.value;
+    const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
+    if (line !== null && line.length === 3){
+        operate();
+    }
+}
+
 const equals = document.querySelector(".equals");
-equals.addEventListener("click", operate);
+equals.addEventListener("click", equalsBehavior);
 
 const backspace = document.querySelector(".backspace");
 backspace.addEventListener("click", addBackspaceEvent);
