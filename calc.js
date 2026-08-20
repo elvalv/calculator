@@ -104,7 +104,7 @@ function addText(event) {
     } else if (line !== null && line.length === 2 && operations.test(text)) {
         console.log("invalid operation");
     } else if(clearResult && text === ".") {
-        input.value = "0."
+        input.value = "0.";
         clearResult=false;
     } else if(clearResult && !operations.test(text)) {
         input.value = text;
@@ -216,5 +216,12 @@ backspace.addEventListener("click", addBackspaceEvent);
 
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", addClearEvent);
+
+const negativeSign = document.querySelector(".negative-sign");
+negativeSign.addEventListener("click", () => {
+    const input = document.querySelector(".screen");
+    input.value = "Surprise!"
+    clearResult = true;
+})
 
 addDisplayEvents();

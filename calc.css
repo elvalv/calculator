@@ -1,3 +1,12 @@
+
+* {
+    color: white;
+}
+
+*:not(.screen) {
+    font-size: 25px;
+}
+
 body, .calc, .keys, .operations, .numbers, .numbers div {
     display: flex;
 }
@@ -8,26 +17,32 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background-color: black;
 }
 
 .calc {
     flex-direction: column;
     align-items: center;
-    background-color: grey;
-    width: 400px;
+    background-color: black;
+    width: 420px;
     height: 600px;
     gap: 25px;
     border-radius: 20px;
+    border: 5px solid grey;
 }
 
 .screen {
     margin-top: 30px;
     height: 50px;
-    width: 280px;
+    width: 300px;
+    border-radius: 15px;
+    border: 5px solid grey;
+    background-color: black;
+    color: white;
 }
 
 .keys {
-    width: 280px;
+    width: 350px;
     height: 450px;
     gap: 5px;
 }
@@ -39,7 +54,9 @@ body {
 }
 
 .operation-key {
+    border-radius: 50%;
     flex: 1;
+    background-color: #FF9F0A;
 }
 
 .numbers {
@@ -54,13 +71,15 @@ body {
 }
 
 .num-keys {
+    border-radius: 50%;
+    background: #333333;
     flex: 1;
-}
-
-.equals {
-    flex-grow: 2;
 }
 
 .screen {
     font-size: 28px;
+}
+
+.top-keys {
+    background: #A5A5A5;
 }
