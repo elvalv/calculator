@@ -1,3 +1,5 @@
+let clearResult = false;
+
 function roundNumber(number) {
     return Math.round(number * 100000) / 100000;
 }
@@ -73,8 +75,12 @@ function addText(event) {
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
     checkOperationLimit(line, text);
     
+    if(clearResult) {
+        input.value = text;
+        clearResult=false;
+    }
     // first if statment deals with leading zeros
-    if (line !== null && line.at(-1) === "0" && text !== ".") {
+    else if (line !== null && line.at(-1) === "0" && text !== ".") {
         const sliceValue = input.value.slice(0,input.value.length-1);
         input.value = sliceValue+text;
     } else if (checkEmptyOperationDecimal(line, text)) {
@@ -103,7 +109,6 @@ function operate() {
     const input = document.querySelector(".screen");
     const operationLine = input.value;
     const line = operationLine.match(/[0-9.]+|[%+\-*\u00f7]/g);
-    // alert(line);
 
     const a = Number(line[0]);
     const b = Number(line[2]);
@@ -129,6 +134,7 @@ function operate() {
             break;
     }
     input.value = answer;
+    clearResult = true;
 }
 
 function equalsBehavior() {
